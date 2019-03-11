@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Simple template</title>
+	<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+<body>
+
+	<h2>Variable</h2>
+	Hi <b>{$name}</b>, this is a beautiful day for a Jedi!
+
+	<br>
+	<br>
+
+	<h2>Week</h2>
+	<ul>
+		{loop="$week"}
+		<li>
+			{$value}
+		</li>
+		{/loop}
+	</ul>
+
+</body>
+</html>

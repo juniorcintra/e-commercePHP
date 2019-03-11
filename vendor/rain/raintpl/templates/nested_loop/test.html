@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Test</title>
+        <link rel="stylesheet" href="style.css" type="text/css" />
+    </head>
+    <body>
+
+        <h3>Loop <font color="red">NEST</font> example with associative array</h3>
+    <tt>
+        <ul> 
+            <li>ID _ Name _ Color</li> 
+            {loop="$user"}
+            <li class="color{$counter%2+1}">{$key}) - {$value.name|strtoupper} - {$value.color} 
+                {if="!empty($value.orders)"} 
+                <ul> 
+                    {loop="$value.orders"}
+                    <li>{$value1.name} - {$key1} - {$counter1} - {$counter} - {$key} - {function str_replace(array('sn','rf','fsd'), '',$value.order_id)} - {$value.order_id} - {$value.order_name}</li> 
+                    {/loop} 
+                </ul> 
+                {/if} 
+            </li>
+            {/loop} 
+        </ul> 
+    </tt> 
+
+</body>
+</html>

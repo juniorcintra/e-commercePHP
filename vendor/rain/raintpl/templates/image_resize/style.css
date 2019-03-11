@@ -1,0 +1,28 @@
+*{margin:0;padding:0}
+body{font-family:Helvetica;font-size:14px;color:#333;}
+a{color:#333;text-decoration:none}
+a:hover{color:#393;text-decoration:underline}
+h1{color:#393;font-size:24px;font-weight:normal;}
+h2{color:#369;font-size:20px;font-weight:normal;}
+h3{color:#333;font-size:17px;font-weight:normal;}
+
+#msg{color:#666;background:#efc;border-top:5px solid #ac0;padding:10px;}
+#msg span{color:#ac0}
+#msg a:hover{color:#ac0}
+
+section, header, nav, footer {width:900px;margin:0 auto;}
+header {height:100px;margin-top:50px}
+nav a{margin-right:30px}
+section{margin-top:50px;}
+
+footer{font-size:11px;clear:both;}
+footer a{margin-right:10px}
+
+#slogan{background:red;float:left;clear:both;height:300px;width:900px;background:red;list-style:none;padding:0px;margin:0px;overflow:auto;}
+#slogan li{float:left;clear:both;padding:0px;margin:0px;background:red;float:left;clear:both;height:300px;width:900px;background:red;list-style:none;overflow:auto;}
+.block_separator{float:left;margin:30px;}
+.block{float:left;width:170px;margin:80px 0 30px}
+.block div{font-size:14px;color:#777;margin:0 0 10px 10px}
+
+.left{float:left;}
+.right{float:right;}

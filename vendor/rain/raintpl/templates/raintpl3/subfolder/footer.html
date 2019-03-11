@@ -1,0 +1,4 @@
+<footer>
+	<div class="left">{loop="$menu"}<a href="{$value.link}" {if="$value.selected"}class="selected"{/if}>{$value.name}</a>{/loop}</div>
+	<div class="right">Copyright <a href="http://www.raintm.com/" target="_blank">RainTM</a></div>
+</footer>

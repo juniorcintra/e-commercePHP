@@ -222,7 +222,11 @@ $app->post("/admin/forgot/reset", function() {
 
 	$user->get((int)$forgot["iduser"]);
 
-	$user->setPassword($_POST["password"]);
+	$user->setPassword(password_hash($_POST["password"], PASSWORD_DEFAULT, [
+
+		"cost"=>12
+
+	]));
 
 	$page = new PageAdmin(array(
 		"header"=>false,

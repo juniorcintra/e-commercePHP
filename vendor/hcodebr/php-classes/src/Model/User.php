@@ -35,7 +35,9 @@ class User extends Model {
 		} else {
 
 			if ($inadmin === true && (bool)$_SESSION[User::SESSION]['inadmin'] === true) {
+
 				return true;
+
 			} else if ( $inadmin === false ){
 
 				return true;
@@ -54,8 +56,8 @@ class User extends Model {
 
 		$sql = new Sql();
 
-		$results = $sql->select("SELECT * FROM tb_users WHERE deslogin = :LOGIN", array(
-			":LOGIN"=>$login
+		$results = $sql->select("SELECT * FROM tb_users WHERE deslogin = :login", array(
+			":login"=>$login
 		));
 
 		if(count($results) === 0){
@@ -87,7 +89,7 @@ class User extends Model {
 
 	public static function verifyLogin($inadmin = true){
 
-		if(User::checkLogin($inadmin)){
+		if(!isset($_SESSION[User::SESSION]) || !$_SESSION[User::SESSION] || !(int)$_SESSION[User::SESSION]["iduser"] > 0 || (bool)$_SESSION[User::SESSION]["inadmin"] !== $inadmin){
 
 			header("Location: /admin/login");
 			exit;

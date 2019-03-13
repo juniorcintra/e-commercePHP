@@ -109,7 +109,7 @@ $app->get('/admin/categories', function(){
 
 $app->get('/admin/categories/:idcategory/products', function($idcategory){
 
-	User::verifyLogin();
+	User::checkLogin();
 
 	$category = new Category();
 

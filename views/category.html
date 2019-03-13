@@ -18,11 +18,11 @@
             <div class="col-md-3 col-sm-6">
                 <div class="single-shop-product">
                     <div class="product-upper">
-                        <img src="/res/site/img/product-2.jpg" alt="">
+                        <img src="{$value.desphoto}" alt="">
                     </div>
-                    <h2><a href="">Apple new mac book 2015 March :P</a></h2>
+                    <h2><a href="/products/{$value.desurl}">{$value.desproduct}</a></h2>
                     <div class="product-carousel-price">
-                        <ins>$899.00</ins> <del>$999.00</del>
+                        <ins>R${function="formatPrice($value.vlprice)"}</ins>
                     </div>  
                     
                     <div class="product-option-shop">

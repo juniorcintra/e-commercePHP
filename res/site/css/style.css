@@ -444,8 +444,8 @@ z-index: 999;}
   overflow: hidden;
 }
 .single-product:hover {}
-.single-product:hover .product-hover a.add-to-cart-link {top: 32%;}
-.single-product:hover .product-hover a.view-details-link {bottom: 32%;}
+.single-product:hover .product-hover a.add-to-cart-link {top: 25%;}
+.single-product:hover .product-hover a.view-details-link {bottom: 25%;}
 .single-product:hover .product-hover:after{left: 0}
 
 

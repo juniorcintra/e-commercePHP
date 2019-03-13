@@ -7,15 +7,15 @@ use \Hcode\Model\Product;
 
 $app->get('/admin/products', function(){
 
-		User::verifyLogin();
+	User::verifyLogin();
 
-		$products = Product::listAll();
+	$products = Product::listAll();
 
-		$page = new PageAdmin();
+	$page = new PageAdmin();
 
-		$page->setTpl("products", [
-			"products"=>$products
-		]);
+	$page->setTpl("products", [
+		"products"=>$products
+	]);
 
 });
 
@@ -94,4 +94,4 @@ $app->get("/admin/products/:idproduct/delete", function ($idproduct) {
 
 });
 
- ?>
+?>

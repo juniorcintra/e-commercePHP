@@ -8,11 +8,21 @@ use \Hcode\Mailer;
 
 class Product extends Model {
 
-	public static function listAll() {
+	public function listAll() {
 
 		$sql = new Sql();
 
 		return $sql->select("SELECT * FROM tb_products ORDER BY desproduct");
+
+	}
+
+	public static function checkList($list){
+
+		foreach ($list as &$row) {
+				$p = new Product();
+				$p->setData($row);
+				$row = $p->getValues();
+		}
 
 	}
 
@@ -81,7 +91,7 @@ class Product extends Model {
 
 	public function setPhoto($file){
 
-		$extension = explode('.', $file['name']);
+		$extension = explode('.', $file["name"]);
 
 		$extension = end($extension);
 

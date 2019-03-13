@@ -20,10 +20,6 @@
                     <div class="woocommerce">
 
                         <form action="/checkout">
-                            
-                            <div class="alert alert-danger" role="alert">
-                            Error!
-                            </div>
 
                             <table cellspacing="0" class="shop_table cart">
                                 <thead>
@@ -41,7 +37,7 @@
 
                                     <tr class="cart_item">
                                         <td class="product-remove">
-                                            <a title="Remove this item" class="remove" href="/cart/{$value.idproduct/remove">×</a> 
+                                            <a title="Remove this item" class="remove" href="/cart/<?php echo htmlspecialchars( $value1["idproduct"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/remove">×</a> 
                                         </td>
 
                                         <td class="product-thumbnail">

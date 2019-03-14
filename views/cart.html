@@ -54,7 +54,7 @@
                                         <td class="product-quantity">
                                             <div class="quantity buttons_added">
                                                 <input type="button" class="minus" value="-" onclick="window.location.href = '/cart/{$value.idproduct}/remove-single'">
-                                                <input type="number" size="4" class="input-text qty text" title="Qty" value="{$value.nrqtd}" min="0" step="1">
+                                                <input type="number" size="4" class="input-text qty text" title="Qty" value="{$value.nrqtd-1}">
                                                 <input type="button" class="plus" value="+" onclick="window.location.href = '/cart/{$value.idproduct}/add'">
                                             </div>
                                         </td>

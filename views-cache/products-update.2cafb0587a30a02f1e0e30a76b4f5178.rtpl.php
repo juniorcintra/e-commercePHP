@@ -45,7 +45,11 @@
               <input type="number" class="form-control" id="vlweight" name="vlweight" step="0.01" placeholder="0.00" value="<?php echo htmlspecialchars( $product["vlweight"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
             </div>
             <div class="form-group">
+<<<<<<< HEAD
               <label for="file">Foto: </label><small>  Largura mínima: 500px e Altura mínima: 500px</small>
+=======
+              <label for="file">Foto</label>
+>>>>>>> origin/master
               <input type="file" class="form-control" id="file" name="file" value="<?php echo htmlspecialchars( $product["vlweight"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
               <div class="box box-widget">
                 <div class="box-body">

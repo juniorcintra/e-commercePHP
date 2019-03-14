@@ -21,12 +21,15 @@
 
                         <form action="/checkout">
 
+<<<<<<< HEAD
                             {if="$error != ''"}
                             <div class="alert alert-danger" role="alert">
                                 {$error}
                             </div>
                             {/if}
 
+=======
+>>>>>>> origin/master
                             <table cellspacing="0" class="shop_table cart">
                                 <thead>
                                     <tr>
@@ -60,7 +63,11 @@
                                         <td class="product-quantity">
                                             <div class="quantity buttons_added">
                                                 <input type="button" class="minus" value="-" onclick="window.location.href = '/cart/{$value.idproduct}/remove-single'">
+<<<<<<< HEAD
                                                 <input type="number" size="4" class="input-text qty text" title="Qty" value="{$value.nrqtd}" min="0" step="1">
+=======
+                                                <input type="number" size="4" class="input-text qty text" title="Qty" value="{$value.nrqtd-1}">
+>>>>>>> origin/master
                                                 <input type="button" class="plus" value="+" onclick="window.location.href = '/cart/{$value.idproduct}/add'">
                                             </div>
                                         </td>
@@ -82,7 +89,11 @@
                                     <div class="coupon">
                                         <label for="cep">CEP:</label>
                                         <input type="text" placeholder="00000-000" value="" id="cep" class="input-text" name="zipcode">
+<<<<<<< HEAD
                                         <input type="submit" formmethod="post" formaction="/cart/freight" value="CALCULAR" class="button">
+=======
+                                        <input type="submit" formmethod="post" formaction="/cart/freight" value="CÁLCULAR" class="button">
+>>>>>>> origin/master
                                     </div>
 
                                 </div>
@@ -95,17 +106,29 @@
                                         <tbody>
                                             <tr class="cart-subtotal">
                                                 <th>Subtotal</th>
+<<<<<<< HEAD
                                                 <td><span class="amount">R${function="formatPrice($cart.vlsubtotal)"}</span></td>
+=======
+                                                <td><span class="amount"></span></td>
+>>>>>>> origin/master
                                             </tr>
 
                                             <tr class="shipping">
                                                 <th>Frete</th>
+<<<<<<< HEAD
                                                 <td>R${function="formatPrice($cart.vlfreight)"} {if="$cart.nrdays > 0"}<small>prazo de {$cart.nrdays} dia(s)</small>{/if}</td>
+=======
+                                                <td>$5.00 <small>prazo de 0 dia(s)</small></td>
+>>>>>>> origin/master
                                             </tr>
 
                                             <tr class="order-total">
                                                 <th>Total</th>
+<<<<<<< HEAD
                                                 <td><strong><span class="amount">R${function="formatPrice($cart.vltotal)"}</span></strong> </td>
+=======
+                                                <td><strong><span class="amount">$705.00</span></strong> </td>
+>>>>>>> origin/master
                                             </tr>
                                         </tbody>
                                     </table>

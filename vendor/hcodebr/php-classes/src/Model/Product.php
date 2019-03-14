@@ -58,11 +58,7 @@ class Product extends Model {
 			"img" . DIRECTORY_SEPARATOR . 
 			"products" . DIRECTORY_SEPARATOR . 
 			$this->getidproduct() . ".jpg"
-<<<<<<< HEAD
 			)) {
-=======
-		)) {
->>>>>>> origin/master
 			$url = "/res/site/img/products/" . $this->getidproduct() . ".jpg";
 		} else {
 			$url = "/res/site/img/product.jpg";
@@ -92,19 +88,11 @@ class Product extends Model {
 			break;
 		}
 		$dist = $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . 
-<<<<<<< HEAD
 			"res" . DIRECTORY_SEPARATOR . 
 			"site" . DIRECTORY_SEPARATOR . 
 			"img" . DIRECTORY_SEPARATOR . 
 			"products" . DIRECTORY_SEPARATOR . 
 			$this->getidproduct() . ".jpg";
-=======
-		"res" . DIRECTORY_SEPARATOR . 
-		"site" . DIRECTORY_SEPARATOR . 
-		"img" . DIRECTORY_SEPARATOR . 
-		"products" . DIRECTORY_SEPARATOR . 
-		$this->getidproduct() . ".jpg";
->>>>>>> origin/master
 		imagejpeg($image, $dist);
 		imagedestroy($image);
 		$this->checkPhoto();
@@ -121,17 +109,10 @@ class Product extends Model {
 	{
 		$sql = new Sql();
 		return $sql->select("
-<<<<<<< HEAD
 			SELECT * FROM tb_categories a INNER JOIN tb_productscategories b ON a.idcategory = b.idcategory WHERE b.idproduct = :idproduct
 		", [
 			':idproduct'=>$this->getidproduct()
 		]);
-=======
-			SELECT * FROM tb_categories a INNER JOIN tb_categoriesproducts b ON a.idcategory = b.idcategory WHERE b.idproduct = :idproduct
-			", [
-				':idproduct'=>$this->getidproduct()
-			]);
->>>>>>> origin/master
 	}
 	public static function getPage($page = 1, $itemsPerPage = 10)
 	{
@@ -142,11 +123,7 @@ class Product extends Model {
 			FROM tb_products 
 			ORDER BY desproduct
 			LIMIT $start, $itemsPerPage;
-<<<<<<< HEAD
 		");
-=======
-			");
->>>>>>> origin/master
 		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
 		return [
 			'data'=>$results,
@@ -164,15 +141,9 @@ class Product extends Model {
 			WHERE desproduct LIKE :search
 			ORDER BY desproduct
 			LIMIT $start, $itemsPerPage;
-<<<<<<< HEAD
 		", [
 			':search'=>'%'.$search.'%'
 		]);
-=======
-			", [
-				':search'=>'%'.$search.'%'
-			]);
->>>>>>> origin/master
 		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
 		return [
 			'data'=>$results,
@@ -181,8 +152,4 @@ class Product extends Model {
 		];
 	}
 }
-<<<<<<< HEAD
  ?>
-=======
-?>
->>>>>>> origin/master

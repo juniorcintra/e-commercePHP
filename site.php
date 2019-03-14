@@ -73,12 +73,9 @@ $app->get('/cart', function(){
 
 	$page->setTpl("cart", [
 		'cart'=>$cart->getValues(),
-<<<<<<< HEAD
 		'products'=>$cart->getProducts(),
-		'error'=>Cart::getMsgError()
-=======
+		'error'=>Cart::getMsgError(),
 		'products'=>$cart->getProducts()
->>>>>>> origin/master
 	]);	
 
 });
@@ -97,11 +94,7 @@ $app->get('/cart/:idproduct/add', function($idproduct){
 		$cart->addProduct($product);
 	}
 
-<<<<<<< HEAD
-=======
 	$cart->addProduct($product);
-
->>>>>>> origin/master
 	header("Location: /cart");
 	exit;
 
@@ -137,7 +130,6 @@ $app->get('/cart/:idproduct/remove', function($idproduct){
 
 });
 
-<<<<<<< HEAD
 $app->post('/cart/freight', function(){
 
 	$cart = Cart::getFromSession();
@@ -149,7 +141,5 @@ $app->post('/cart/freight', function(){
 
 });
 
-=======
->>>>>>> origin/master
 
 ?>

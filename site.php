@@ -595,7 +595,7 @@ $app->post("/profile", function(){
 
 	header('Location: /profile');
 	exit;
-	
+
 });
 
 

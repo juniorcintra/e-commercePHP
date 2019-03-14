@@ -14,7 +14,7 @@
     <div class="zigzag-bottom"></div>
     <div class="container">
         <div class="row">
-            
+
             <div class="col-md-12">
                 <div class="product-content-right">
                     <div class="woocommerce">
@@ -46,11 +46,11 @@
                                         </td>
 
                                         <td class="product-thumbnail">
-                                            <a href="/product/{$value.desurl}"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="{$value.desphoto}"></a>
+                                            <a href="/products/{$value.desurl}"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="{$value.desphoto}"></a>
                                         </td>
 
                                         <td class="product-name">
-                                            <a href="/product/{value.desurl}">{$value.desproduct}</a> 
+                                            <a href="/product/{$value.desurl}">{$value.desproduct}</a> 
                                         </td>
 
                                         <td class="product-price">
@@ -59,7 +59,7 @@
 
                                         <td class="product-quantity">
                                             <div class="quantity buttons_added">
-                                                <input type="button" class="minus" value="-" onclick="window.location.href = '/cart/{$value.idproduct}/remove-single'">
+                                                <input type="button" class="minus" value="-" onclick="window.location.href = '/cart/{$value.idproduct}/minus'">
                                                 <input type="number" size="4" class="input-text qty text" title="Qty" value="{$value.nrqtd}" min="0" step="1">
                                                 <input type="button" class="plus" value="+" onclick="window.location.href = '/cart/{$value.idproduct}/add'">
                                             </div>
@@ -81,13 +81,13 @@
                                     
                                     <div class="coupon">
                                         <label for="cep">CEP:</label>
-                                        <input type="text" placeholder="00000-000" value="" id="cep" class="input-text" name="zipcode">
+                                        <input type="text" placeholder="00000-000" value="{$cart.deszipcode}" id="cep" class="input-text" name="zipcode">
                                         <input type="submit" formmethod="post" formaction="/cart/freight" value="CALCULAR" class="button">
                                     </div>
 
                                 </div>
 
-                                <div class="cart_totals ">
+                                <div class="cart_totals">
 
                                     <h2>Resumo da Compra</h2>
 
@@ -100,7 +100,7 @@
 
                                             <tr class="shipping">
                                                 <th>Frete</th>
-                                                <td>R${function="formatPrice($cart.vlfreight)"} {if="$cart.nrdays > 0"}<small>prazo de {$cart.nrdays} dia(s)</small>{/if}</td>
+                                                <td>R${function="formatPrice($cart.vlfreight)"}{if="$cart.nrdays > 0"} <small>prazo de {$cart.nrdays} dia(s)</small>{/if}</td>
                                             </tr>
 
                                             <tr class="order-total">
@@ -118,7 +118,7 @@
                             </div>
 
                         </form>
-                        
+
                     </div>                        
                 </div>                    
             </div>

@@ -380,7 +380,7 @@ class User extends Model {
 
 	}
 
-	public static function checkLoginExist($login){
+	public static function checkLoginExists($login){
 
 		$sql = new Sql();
 

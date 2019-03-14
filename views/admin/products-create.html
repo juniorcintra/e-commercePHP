@@ -71,7 +71,9 @@
 
 
   function updateOrder(){
-    var string = document.getElementById("desproduct").value; 
+    var string1 = document.getElementById("desproduct").value; 
+
+    var string = string1.replace('"', "");
 
     var retorno = string.split(" ");
 
@@ -79,7 +81,9 @@
 
     var result = juntar.replace(".", "-");
 
-    document.getElementById("desurl").value = result;
+    var low = result.toLowerCase();
+
+    document.getElementById("desurl").value = low;
   }
 // Era para atualizar sempre que o campo de cada input abaixo referenciado fosse mudado
 // mas isso só acontece quando eu atualizo a página.

@@ -438,24 +438,24 @@ $app->get("/forgot/reset", function(){
 
 });
 
-$app->post("/forgot/reset", function(){
+$app->post("/forgot/reset", function() {
 
-	$forgot = User::validForgotDecrypt($_POST["code"]);	
+     $forgot = User::validForgotDecrypt($_POST["code"]);
 
-	User::setFogotUsed($forgot["idrecovery"]);
+     User::setForgotUsed($forgot["idrecovery"]);
 
-	$user = new User();
+     $user = new User();
 
-	$user->get((int)$forgot["iduser"]);
+     $user->get((int)$forgot["iduser"]);
 
-	$password = User::getPasswordHash($_POST["password"]);
+     $password = user::getPasswordHash($_POST['password']);
 
-	$user->setPassword($password);
+     $user->setPassword($password);
 
-	$page = new Page();
+     $page = new Page();
 
-	$page->setTpl("forgot-reset-success");
-
+     $page->setTpl("forgot-reset-success");
+     
 });
 
 $app->get("/profile", function(){
@@ -525,7 +525,7 @@ $app->post("/profile", function(){
 
 	header('Location: /profile');
 	exit;
-	
+
 });
 
 

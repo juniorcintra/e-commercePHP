@@ -380,6 +380,8 @@ $app->get("/logout", function(){
 
 	User::logout();
 
+	Cart::removeSession();
+
 	header("Location: /login");
 	exit;
 

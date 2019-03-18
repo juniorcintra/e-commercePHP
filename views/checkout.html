@@ -20,11 +20,11 @@
 						<div id="customer_details" class="col2-set">
 							<div class="row">
 								<div class="col-md-12">
-
+									{if="$error != ''"}
 									<div class="alert alert-danger">
-										Error!
+										{$error}
 									</div>
-
+									{/if}
 									<div class="woocommerce-billing-fields">
 										<h3>Endereço de entrega</h3>
 										<p id="billing_address_1_field" class="form-row form-row-wide address-field validate-required">
@@ -70,33 +70,33 @@
 													</tr>
 												</thead>
 												<tbody>
-                                                    
+                                                    {loop="$products"}
 													<tr class="cart_item">
 														<td class="product-name">
-															Ship Your Idea <strong class="product-quantity">× 1</strong> 
+															{$value.desproduct} <strong class="product-quantity">× {$value.nrqtd}</strong> 
 														</td>
 														<td class="product-total">
-															<span class="amount">$700.00</span>
+															<span class="amount">R${function="formatPrice($value.vltotal)"}</span>
 														</td>
                                                     </tr>
-                                                    
+                                                    {/loop}
 												</tbody>
 												<tfoot>
 													<tr class="cart-subtotal">
 														<th>Subtotal</th>
-														<td><span class="amount">$700.00</span>
+														<td><span class="amount">R${function="formatPrice($cart.vlsubtotal)"}</span>
 														</td>
 													</tr>
 													<tr class="shipping">
 														<th>Frete</th>
 														<td>
-															$5.00
+															R${function="formatPrice($cart.vlfreight)"}
 															<input type="hidden" class="shipping_method" value="free_shipping" id="shipping_method_0" data-index="0" name="shipping_method[0]">
 														</td>
 													</tr>
 													<tr class="order-total">
 														<th>Total do Pedido</th>
-														<td><strong><span class="amount">$705.00</span></strong> </td>
+														<td><strong><span class="amount">R${function="formatPrice($cart.vltotal)"}</span></strong> </td>
 													</tr>
 												</tfoot>
 											</table>

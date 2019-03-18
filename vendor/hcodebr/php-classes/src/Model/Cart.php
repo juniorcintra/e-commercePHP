@@ -6,7 +6,6 @@ use \Hcode\DB\Sql;
 use \Hcode\Model;
 use \Hcode\Mailer;
 use \Hcode\Model\User;
-use \Hcode\Model\Address;
 
 class Cart extends Model {
 
@@ -18,13 +17,13 @@ class Cart extends Model {
 
 		$cart = new Cart();
 
-		if(isset($_SESSION[Cart::SESSION]) && (int)$_SESSION[Cart::SESSION]['idcart'] > 0){//se a sessão estiver ativa - procura o carrinho
+		if(isset($_SESSION[Cart::SESSION]) && (int)$_SESSION[Cart::SESSION]['idcart'] > 0){
 
 			$cart->get((int)$_SESSION[Cart::SESSION]['idcart']);
 
-		}else{//se ainda não existe um carrinho
+		}else{
 
-			$cart->getFromSessionID();//tenta carregar o carrinho
+			$cart->getFromSessionID();
 
 			if (!(int)$cart->getidcart() > 0){
 
@@ -32,19 +31,19 @@ class Cart extends Model {
 					'dessessionid'=>session_id()
 				];
 
-				if (User::checkLogin(false)){//se retornar true ele esta logado
+				if (User::checkLogin(false)){
 
-				$user = User::getFromSession();//traz o usuario
+					$user = User::getFromSession();
 
-				$data['iduser']  = $user->getiduser();
+					$data['iduser']  = $user->getiduser();
 
-			}
+				}
 
-			$cart->setData($data);
+				$cart->setData($data);
 
-			$cart->save();
+				$cart->save();
 
-			$cart->setToSession();//settar para a sessão
+				$cart->setToSession();
 
 			}
 
@@ -60,14 +59,14 @@ class Cart extends Model {
 
 	}
 
-	public function removeSession()
+	/*public function removeSession()
 	{
 
 		$_SESSION[Cart::SESSION] = NULL;
 
 		session_regenerate_id();
 
-	}
+	}*/
 	
 	public function getFromSessionID(){
 
@@ -156,14 +155,14 @@ class Cart extends Model {
 
 			$sql->query("
 				UPDATE tb_cartsproducts
-			 	SET dtremoved = NOW() 
-			 	WHERE idcart = :idcart 
-			 	AND idproduct = :idproduct 
-			 	AND dtremoved IS NULL 
-			 	LIMIT 1", [
-				':idcart'=>$this->getidcart(),
-				':idproduct'=>$product->getidproduct()
-			]);
+				SET dtremoved = NOW() 
+				WHERE idcart = :idcart 
+				AND idproduct = :idproduct 
+				AND dtremoved IS NULL 
+				LIMIT 1", [
+					':idcart'=>$this->getidcart(),
+					':idproduct'=>$product->getidproduct()
+				]);
 
 		}
 

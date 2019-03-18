@@ -208,7 +208,10 @@ class User extends Model {
 
 			throw new \Exception("Não foi possível recuperar a senha.");
 
-		} else {
+		}
+
+		else{
+
 			$data = $results[0];
 
 			$results2 = $sql->select("CALL sp_userspasswordsrecoveries_create(:iduser, :desip)", array(
@@ -220,7 +223,10 @@ class User extends Model {
 
 				throw new \Exception("Não foi possível recuperar a senha.");
 
-			} else {
+			}
+
+			else{
+
 				$dataRecovery = $results2[0];
 
 				$iv = random_bytes(openssl_cipher_iv_length('aes-256-cbc'));
@@ -239,7 +245,7 @@ class User extends Model {
 
 				} 
 
-				$mailer = new Mailer($data['desemail'], $data['desperson'], "Redefinir senha da Junior Store", "forgot", array(
+				$mailer = new Mailer($data['desemail'], $data['desperson'], "Redefinir senha da Hcode Store", "forgot", array(
 					"name"=>$data['desperson'],
 					"link"=>$link
 				)); 
@@ -260,7 +266,7 @@ class User extends Model {
 
 		$code = mb_substr($result, openssl_cipher_iv_length('aes-256-cbc'), null, '8bit');
 
-		$iv = mb_substr($result, 0, openssl_cipher_iv_length('aes-256-cbc'), '8bit');;
+		$iv = mb_substr($result, 0, openssl_cipher_iv_length('aes-256-cbc'), '8bit');
 
 		$idrecovery = openssl_decrypt($code, 'aes-256-cbc', User::SECRET, 0, $iv);
 
@@ -285,7 +291,9 @@ class User extends Model {
 
 			throw new \Exception("Não foi possível recuperar a senha.");
 
-		} else {
+		}
+
+		else{
 
 			return $results[0];
 

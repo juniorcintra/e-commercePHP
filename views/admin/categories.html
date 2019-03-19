@@ -20,6 +20,16 @@
             
             <div class="box-header">
               <a href="/admin/categories/create" class="btn btn-success">Cadastrar Categoria</a>
+              <div class="box-tools">
+                <form action="/admin/categories">
+                  <div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" name="search" class="form-control pull-right" placeholder="Search" value="{$search}">
+                    <div class="input-group-btn">
+                      <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                    </div>
+                  </div>
+                </form>
+              </div>
             </div>
 
             <div class="box-body no-padding">
@@ -47,6 +57,13 @@
               </table>
             </div>
             <!-- /.box-body -->
+            <div class="box-footer clearfix">
+              <ul class="pagination pagination-sm no-margin pull-right">
+                {loop="$pages"}
+                <li><a href="{$value.href}">{$value.text}</a></li>
+                {/loop}
+              </ul>
+            </div>
           </div>
   	</div>
   </div>

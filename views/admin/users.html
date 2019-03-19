@@ -41,7 +41,7 @@
                     <th>E-mail</th>
                     <th>Login</th>
                     <th style="width: 60px">Admin</th>
-                    <th style="width: 140px">&nbsp;</th>
+                    <th style="width: 240px">&nbsp;</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -54,6 +54,7 @@
                     <td>{if="$value.inadmin == 1"}Sim{else}Não{/if}</td>
                     <td>
                       <a href="/admin/users/{$value.iduser}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
+                      <a href="/admin/users/{$value.iduser}/password" class="btn btn-default btn-xs"><i class="fa fa-unlock"></i> Alterar Senha</a>
                       <a href="/admin/users/{$value.iduser}/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
                     </td>
                   </tr>

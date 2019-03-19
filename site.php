@@ -656,8 +656,6 @@ $app->post("/profile", function(){
 });
 
 
-
-
 $app->get("/profile/orders", function(){
 
 	User::verifyLogin(false);

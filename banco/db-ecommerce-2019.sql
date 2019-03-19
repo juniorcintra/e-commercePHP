@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 14-Mar-2019 às 21:44
+-- Generation Time: 18-Mar-2019 às 22:32
 -- Versão do servidor: 10.1.38-MariaDB
 -- versão do PHP: 7.3.2
 
@@ -21,6 +21,189 @@ SET time_zone = "+00:00";
 --
 -- Database: `db_ecommerce`
 --
+
+DELIMITER $$
+--
+-- Procedures
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_addresses_save` (`pidaddress` INT(11), `pidperson` INT(11), `pdesaddress` VARCHAR(128), `pdescomplement` VARCHAR(32), `pdescity` VARCHAR(32), `pdesstate` VARCHAR(32), `pdescountry` VARCHAR(32), `pdeszipcode` CHAR(8), `pdesdistrict` VARCHAR(32))  BEGIN
+
+	IF pidaddress > 0 THEN
+		
+		UPDATE tb_addresses
+        SET
+			idperson = pidperson,
+            desaddress = pdesaddress,
+            descomplement = pdescomplement,
+            descity = pdescity,
+            desstate = pdesstate,
+            descountry = pdescountry,
+            deszipcode = pdeszipcode, 
+            desdistrict = pdesdistrict
+		WHERE idaddress = pidaddress;
+        
+    ELSE
+		
+		INSERT INTO tb_addresses (idperson, desaddress, descomplement, descity, desstate, descountry, deszipcode, desdistrict)
+        VALUES(pidperson, pdesaddress, pdescomplement, pdescity, pdesstate, pdescountry, pdeszipcode, pdesdistrict);
+        
+        SET pidaddress = LAST_INSERT_ID();
+        
+    END IF;
+    
+    SELECT * FROM tb_addresses WHERE idaddress = pidaddress;
+
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_carts_save` (IN `pidcart` INT, IN `pdessessionid` VARCHAR(64), IN `piduser` INT, IN `pdeszipcode` CHAR(8), IN `pvlfreight` DECIMAL(10,2), IN `pnrdays` INT)  BEGIN
+
+    IF pidcart > 0 THEN
+        
+        UPDATE tb_carts
+        SET
+            dessessionid = pdessessionid,
+            iduser = piduser,
+            deszipcode = pdeszipcode,
+            vlfreight = pvlfreight,
+            nrdays = pnrdays
+        WHERE idcart = pidcart;
+        
+    ELSE
+        
+        INSERT INTO tb_carts (dessessionid, iduser, deszipcode, vlfreight, nrdays)
+        VALUES(pdessessionid, piduser, pdeszipcode, pvlfreight, pnrdays);
+        
+        SET pidcart = LAST_INSERT_ID();
+        
+    END IF;
+    
+    SELECT * FROM tb_carts WHERE idcart = pidcart;
+
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_categories_save` (`pidcategory` INT, `pdescategory` VARCHAR(64))  BEGIN
+	
+	IF pidcategory > 0 THEN
+		
+		UPDATE tb_categories
+        SET descategory = pdescategory
+        WHERE idcategory = pidcategory;
+        
+    ELSE
+		
+		INSERT INTO tb_categories (descategory) VALUES(pdescategory);
+        
+        SET pidcategory = LAST_INSERT_ID();
+        
+    END IF;
+    
+    SELECT * FROM tb_categories WHERE idcategory = pidcategory;
+    
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_products_save` (`pidproduct` INT(11), `pdesproduct` VARCHAR(64), `pvlprice` DECIMAL(10,2), `pvlwidth` DECIMAL(10,2), `pvlheight` DECIMAL(10,2), `pvllength` DECIMAL(10,2), `pvlweight` DECIMAL(10,2), `pdesurl` VARCHAR(128))  BEGIN
+	
+	IF pidproduct > 0 THEN
+		
+		UPDATE tb_products
+        SET 
+			desproduct = pdesproduct,
+            vlprice = pvlprice,
+            vlwidth = pvlwidth,
+            vlheight = pvlheight,
+            vllength = pvllength,
+            vlweight = pvlweight,
+            desurl = pdesurl
+        WHERE idproduct = pidproduct;
+        
+    ELSE
+		
+		INSERT INTO tb_products (desproduct, vlprice, vlwidth, vlheight, vllength, vlweight, desurl) 
+        VALUES(pdesproduct, pvlprice, pvlwidth, pvlheight, pvllength, pvlweight, pdesurl);
+        
+        SET pidproduct = LAST_INSERT_ID();
+        
+    END IF;
+    
+    SELECT * FROM tb_products WHERE idproduct = pidproduct;
+    
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_userspasswordsrecoveries_create` (`piduser` INT, `pdesip` VARCHAR(45))  BEGIN
+  
+  INSERT INTO tb_userspasswordsrecoveries (iduser, desip)
+    VALUES(piduser, pdesip);
+    
+    SELECT * FROM tb_userspasswordsrecoveries
+    WHERE idrecovery = LAST_INSERT_ID();
+    
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_usersupdate_save` (`piduser` INT, `pdesperson` VARCHAR(64), `pdeslogin` VARCHAR(64), `pdespassword` VARCHAR(256), `pdesemail` VARCHAR(128), `pnrphone` BIGINT, `pinadmin` TINYINT)  BEGIN
+  
+    DECLARE vidperson INT;
+    
+  SELECT idperson INTO vidperson
+    FROM tb_users
+    WHERE iduser = piduser;
+    
+    UPDATE tb_persons
+    SET 
+    desperson = pdesperson,
+        desemail = pdesemail,
+        nrphone = pnrphone
+  WHERE idperson = vidperson;
+    
+    UPDATE tb_users
+    SET
+    deslogin = pdeslogin,
+        despassword = pdespassword,
+        inadmin = pinadmin
+  WHERE iduser = piduser;
+    
+    SELECT * FROM tb_users a INNER JOIN tb_persons b USING(idperson) WHERE a.iduser = piduser;
+    
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_users_delete` (IN `piduser` INT)  BEGIN
+
+    DECLARE vidperson INT;
+
+    SET FOREIGN_KEY_CHECKS = 0;
+
+    SELECT idperson INTO vidperson
+
+        FROM tb_users
+
+    WHERE iduser = piduser;
+
+    DELETE FROM tb_persons WHERE idperson = vidperson;
+
+    DELETE FROM tb_userspasswordsrecoveries WHERE iduser = piduser;
+
+    DELETE FROM tb_users WHERE iduser = piduser;
+
+    SET FOREIGN_KEY_CHECKS = 1;
+
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_users_save` (`pdesperson` VARCHAR(64), `pdeslogin` VARCHAR(64), `pdespassword` VARCHAR(256), `pdesemail` VARCHAR(128), `pnrphone` BIGINT, `pinadmin` TINYINT)  BEGIN
+  
+    DECLARE vidperson INT;
+    
+  INSERT INTO tb_persons (desperson, desemail, nrphone)
+    VALUES(pdesperson, pdesemail, pnrphone);
+    
+    SET vidperson = LAST_INSERT_ID();
+    
+    INSERT INTO tb_users (idperson, deslogin, despassword, inadmin)
+    VALUES(vidperson, pdeslogin, pdespassword, pinadmin);
+    
+    SELECT * FROM tb_users a INNER JOIN tb_persons b USING(idperson) WHERE a.iduser = LAST_INSERT_ID();
+    
+END$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -57,6 +240,14 @@ CREATE TABLE `tb_carts` (
   `dtregister` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Extraindo dados da tabela `tb_carts`
+--
+
+INSERT INTO `tb_carts` (`idcart`, `dessessionid`, `iduser`, `deszipcode`, `vlfreight`, `nrdays`, `dtregister`) VALUES
+(1, 'be4uk5j9g7j3digqcfisj220it', 15, NULL, NULL, NULL, '2019-03-18 20:17:50'),
+(2, 'ou69mh8avr9nr9ulnjkj9vbvfs', 15, '27345350', '140.07', 3, '2019-03-18 20:25:25');
+
 -- --------------------------------------------------------
 
 --
@@ -70,6 +261,17 @@ CREATE TABLE `tb_cartsproducts` (
   `dtremoved` datetime DEFAULT NULL,
   `dtregister` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `tb_cartsproducts`
+--
+
+INSERT INTO `tb_cartsproducts` (`idcartproduct`, `idcart`, `idproduct`, `dtremoved`, `dtregister`) VALUES
+(1, 1, 10, '2019-03-18 17:18:03', '2019-03-18 20:17:58'),
+(2, 1, 10, '2019-03-18 17:18:05', '2019-03-18 20:18:02'),
+(3, 2, 10, '2019-03-18 17:28:58', '2019-03-18 20:28:38'),
+(4, 2, 6, NULL, '2019-03-18 20:29:05'),
+(5, 2, 6, NULL, '2019-03-18 20:30:23');
 
 -- --------------------------------------------------------
 
@@ -103,6 +305,22 @@ CREATE TABLE `tb_categoriesproducts` (
   `idproduct` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Extraindo dados da tabela `tb_categoriesproducts`
+--
+
+INSERT INTO `tb_categoriesproducts` (`idcategory`, `idproduct`) VALUES
+(8, 1),
+(8, 5),
+(8, 6),
+(9, 10),
+(10, 1),
+(10, 5),
+(10, 6),
+(10, 7),
+(10, 8),
+(10, 9);
+
 -- --------------------------------------------------------
 
 --
@@ -130,6 +348,16 @@ CREATE TABLE `tb_ordersstatus` (
   `dtregister` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Extraindo dados da tabela `tb_ordersstatus`
+--
+
+INSERT INTO `tb_ordersstatus` (`idstatus`, `desstatus`, `dtregister`) VALUES
+(1, 'Em Aberto', '2017-03-13 06:00:00'),
+(2, 'Aguardando Pagamento', '2017-03-13 06:00:00'),
+(3, 'Pago', '2017-03-13 06:00:00'),
+(4, 'Entregue', '2017-03-13 06:00:00');
+
 -- --------------------------------------------------------
 
 --
@@ -150,7 +378,7 @@ CREATE TABLE `tb_persons` (
 
 INSERT INTO `tb_persons` (`idperson`, `desperson`, `desemail`, `nrphone`, `dtregister`) VALUES
 (10, 'Administrador', 'junior.cintra@sw5.com.br', 24981584658, '2019-03-14 16:40:02'),
-(14, 'Junior Cintra', 'junior.developer@outlook.com.br', 24981584658, '2019-03-14 19:32:07');
+(15, 'Junior Cintra', 'junior.developer@outlook.com.br', 24981584658, '2019-03-18 15:04:12');
 
 -- --------------------------------------------------------
 
@@ -206,7 +434,7 @@ CREATE TABLE `tb_users` (
 
 INSERT INTO `tb_users` (`iduser`, `idperson`, `deslogin`, `despassword`, `inadmin`, `dtregister`) VALUES
 (10, 10, 'admin', '$2y$12$uNat0mY2TYUYE8wG.6.Hpuu0o1EZ1lXZtoq647aJaTm1Tb6YhUzB6', 1, '2019-03-14 16:40:02'),
-(14, 14, 'junior.developer@outlook.com.br', '$2y$12$8.BnyvQW3DNP/5vav0x8xupEZ/PeVWM3l1HL6zy3M8pbuky57Cp0S', 0, '2019-03-14 19:32:07');
+(15, 15, 'junior.developer@outlook.com.br', '$2y$12$rfMme1zxgHYd0uALqx9sGeDMAEySWsRsXKS.m12WrV5.8ie2uG.xS', 0, '2019-03-18 15:04:12');
 
 -- --------------------------------------------------------
 
@@ -238,6 +466,13 @@ CREATE TABLE `tb_userspasswordsrecoveries` (
   `dtrecovery` datetime DEFAULT NULL,
   `dtregister` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `tb_userspasswordsrecoveries`
+--
+
+INSERT INTO `tb_userspasswordsrecoveries` (`idrecovery`, `iduser`, `desip`, `dtrecovery`, `dtregister`) VALUES
+(5, 15, '127.0.0.1', '2019-03-18 12:05:20', '2019-03-18 15:04:20');
 
 --
 -- Indexes for dumped tables
@@ -339,13 +574,13 @@ ALTER TABLE `tb_addresses`
 -- AUTO_INCREMENT for table `tb_carts`
 --
 ALTER TABLE `tb_carts`
-  MODIFY `idcart` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idcart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tb_cartsproducts`
 --
 ALTER TABLE `tb_cartsproducts`
-  MODIFY `idcartproduct` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idcartproduct` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tb_categories`
@@ -363,7 +598,7 @@ ALTER TABLE `tb_orders`
 -- AUTO_INCREMENT for table `tb_ordersstatus`
 --
 ALTER TABLE `tb_ordersstatus`
-  MODIFY `idstatus` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idstatus` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tb_persons`
@@ -393,7 +628,7 @@ ALTER TABLE `tb_userslogs`
 -- AUTO_INCREMENT for table `tb_userspasswordsrecoveries`
 --
 ALTER TABLE `tb_userspasswordsrecoveries`
-  MODIFY `idrecovery` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idrecovery` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
